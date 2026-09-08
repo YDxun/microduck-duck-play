@@ -1,0 +1,9 @@
+﻿__pycache__/
+*.pyc
+research/artifacts/
+research/ssh_tunnel.out
+research/ssh_tunnel.err
+research/tb_tunnel.out
+research/tb_tunnel.err
+microduck_图纸_标准ZIP版.zip
+机器鸭图纸_3MF原文件.zip
