@@ -25,12 +25,20 @@ class DemoRecorder:
         self.frame_dir.mkdir(parents=True, exist_ok=True)
         self.renderer = mujoco.Renderer(sim.model, height=height, width=width)
         self.cam = mujoco.MjvCamera()
-        self.cam.type = mujoco.mjtCamera.mjCAMERA_TRACKING
-        self.cam.trackbodyid = sim.trunk_id
-        self.cam.distance = 0.62
-        self.cam.azimuth = 150
-        self.cam.elevation = -16
-        self.cam.lookat = [0, 0, 0.08]
+        self.mode = os.environ.get("DUCKPLAY_REC_MODE", "track")
+        if self.mode == "wide":
+            self.cam.type = mujoco.mjtCamera.mjCAMERA_FREE
+            self.cam.lookat = [0.55, 0.0, 0.28]
+            self.cam.distance = 2.4
+            self.cam.azimuth = -55
+            self.cam.elevation = -20
+        else:
+            self.cam.type = mujoco.mjtCamera.mjCAMERA_TRACKING
+            self.cam.trackbodyid = sim.trunk_id
+            self.cam.distance = 0.62
+            self.cam.azimuth = 150
+            self.cam.elevation = -16
+            self.cam.lookat = [0, 0, 0.08]
         self.idx = 0
         self.frames = 0
         self.capture_every = capture_every
@@ -61,5 +69,8 @@ class DemoRecorder:
             f.unlink()
         self.frame_dir.rmdir()
         return self.out
+
+
+
 
 
